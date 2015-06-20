@@ -1,0 +1,30 @@
+{
+  "name": "fuckthebrains",
+  "version": "0.0.1",
+  "description": "Brainfuck interprener",
+  "main": "brain.js",
+  "scripts": {
+    "test": "mocha --reporter spec --recursive spec/tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codemanki/fuckthebrains"
+  },
+  "keywords": [
+    "brainfuck"
+  ],
+  "author": "codemanki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/codemanki/fuckthebrains/issues"
+  },
+  "publishConfig": {
+    "registry": "http://registry.npmjs.org"
+  },
+  "devDependencies": {
+    "should": "6.0.3",
+    "mocha": "2.2.5",
+    "sinon": "1.14.1"
+  },
+  "homepage": "https://github.com/codemanki/fuckthebrains"
+}
