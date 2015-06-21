@@ -19,6 +19,14 @@ describe('Basic functionality', function() {
   });
 
   it('should return A', function() {
-    interprener.execute('++++++ [ > ++++++++++ < - ] > +++++ .', {as: 'text'}).should.equal('A');
+    assert.deepEqual(interprener.execute('++++++ [ > ++++++++++ < - ] > +++++ .', {as: 'text'}), 'A');
   });
+
+  it('should return 4', function() {
+    assert.deepEqual(interprener.execute('+->+++<[++]>+-<++>+.'), [4]);
+  });
+
+  it('should yo!', function() {
+    assert.deepEqual(interprener.execute('+++++++++[>++++++++++>++++++++++++>++++<<<-]>-.>+++.>---.', {as: 'text'}), 'Yo!');
+  })
 });
