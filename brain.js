@@ -14,10 +14,15 @@ function BF(options) {
   reset.call(this);
 }
 
-BF.prototype.execute = function(sourceCode, options) {
+BF.prototype.execute = function(sourceCode, inputSource, options) {
+  if (typeof inputSource !== 'string') {
+    options = inputSource;
+  }
+
   reset.call(this);
 
   var sourceCodePointer = 0,
+      inputSourcePointer = 0,
       jumps;
   this.memory[0] = 0; // Set first byte as 0 automatically
   sourceCode = (typeof sourceCode == 'string' || sourceCode instanceof String) ? sourceCode : '';
@@ -52,6 +57,12 @@ BF.prototype.execute = function(sourceCode, options) {
       case '.':
         debugLog('Print at ' + sourceCodePointer + '. Value is ' + (this.memory[sourceCodePointer]));
         this.output.push(this.memory[sourceCodePointer]);
+        break;
+      case ',':
+        if (inputSourcePointer < inputSource.length) {
+          this.memory[sourceCodePointer] = inputSource.charCodeAt(inputSourcePointer);
+          inputSourcePointer++;
+        }
         break;
       case '[':
         if (this.memory[sourceCodePointer] == 0) {
@@ -88,7 +99,6 @@ BF.prototype.debugLog = function() {
 function reset() {
   // TODO: Optimize this and not create huge array
   this.memory = new Array(this.options.cells);
-  this._memoryPointer = 0;
   this.output = [];
   DEBUG_LOG = [];
 }

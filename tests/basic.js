@@ -40,5 +40,11 @@ describe('Basic functionality', function() {
     assert.throws(interpreter.execute.bind(interpreter, '[[]'), BF.SyntaxError);
     assert.throws(interpreter.execute.bind(interpreter, ']['), BF.SyntaxError);
     assert.throws(interpreter.execute.bind(interpreter, '[]]'), BF.SyntaxError);
-  })
+  });
+
+  it('should support input', function() {
+    assert.equal(interpreter.execute('>,[>,]<[.<]', 'reeB', {as: 'text'}), 'Beer'); // Reverses input string
+    assert.equal(interpreter.execute(',.,.,.', 'DeliciousBeer', {as: 'text'}), 'Del'); // Reads only first 3 chars
+    //+[->,----------]<[+++++++++++.<] Test this
+  });
 });
