@@ -99,31 +99,39 @@ function debugLog(message) {
 
 function preCalcJumps(sourceCode) {
   // Go through the source code and build map of jumps
-  // Currently do not supports
-  var openingBracketPosition = null,
-      jumps  = {};
+  // Currently doesnt support nested loops
+  var stack = [],
+      jumps  = {},
+      position;
 
   for(var i = 0; i < sourceCode.length; i++) {
     var currentChar = sourceCode[i];
 
     switch (currentChar) {
       case '[':
-        if (openingBracketPosition !== null) {
-          throw new Error('Two consequent jumps! First on ' + openingBracketPosition + ' second on ' + i);
-        }
-
-        openingBracketPosition = i;
+        stack.push(i);
         break;
       case ']':
-        if (openingBracketPosition === null) {
-          throw new Error('Unopened closed bracket on ' + i);
+        position = stack.pop();
+        if (position === undefined) {
+          throw new BF.SyntaxError('Bad jump syntax');
         }
-        jumps[openingBracketPosition] = i;
-        jumps[i] = openingBracketPosition;
-        openingBracketPosition = null;
+        jumps[position] = i;
+        jumps[i] = position;
         break;
     }
+  }
+  if (stack.length) {
+    throw new BF.SyntaxError('Bad jump syntax');
   }
 
   return jumps;
 }
+
+
+BF.SyntaxError = function(message) {
+    this.name = 'SyntaxError';
+    this.message = message;
+}
+
+BF.SyntaxError.prototype = Error.prototype;

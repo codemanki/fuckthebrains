@@ -1,7 +1,7 @@
 {
   "name": "fuckthebrains",
   "version": "0.0.1",
-  "description": "Brainfuck interprener",
+  "description": "Brainfuck interpreter",
   "main": "brain.js",
   "scripts": {
     "test": "mocha --reporter spec --recursive tests"
